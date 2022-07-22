@@ -7,7 +7,7 @@ import Text from "./Text";
 const styles = StyleSheet.create({
   color: theme.navBar.color,
   paddingVertical: 13,
-  paddingLeft: 10,
+  paddingHorizontal: 5,
 });
 
 const AppBarTab = ({ to, children }) => {
