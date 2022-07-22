@@ -15,6 +15,10 @@ const theme = {
     normal: "400",
     bold: "700",
   },
+  navBar: {
+    color: "white",
+    backgroundColor: "#24292e",
+  },
 };
 
 export default theme;
