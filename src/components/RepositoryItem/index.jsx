@@ -1,19 +1,29 @@
-import { View, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 
-const RepositoryItem = ({ item: repository }) => {
-  const starsCount = repository.stargazersCount;
-  const stars =
-    starsCount > 1000 ? (starsCount / 1000).toFixed(1) + "k" : starsCount;
+import theme from "../../theme";
+import Description from "./Description";
+import Info from "./Info";
 
+const styles = StyleSheet.create({
+  padding: 10,
+  backgroundColor: theme.colors.foreground,
+});
+
+const RepositoryItem = ({ item }) => {
   return (
-    <View>
-      <Text>Full Name: {repository.fullName}</Text>
-      <Text>Description: {repository.description}</Text>
-      <Text>Language: {repository.language}</Text>
-      <Text>Stars: {stars}</Text>
-      <Text>Forks: {repository.forksCount}</Text>
-      <Text>Reviews: {repository.reviewCount}</Text>
-      <Text>Rating: {repository.ratingAverage}</Text>
+    <View style={styles}>
+      <Description
+        avatar={item.ownerAvatarUrl}
+        name={item.fullName}
+        description={item.description}
+        language={item.language}
+      />
+      <Info
+        stars={item.stargazersCount}
+        forks={item.forksCount}
+        rating={item.ratingAverage}
+        reviews={item.reviewCount}
+      />
     </View>
   );
 };
