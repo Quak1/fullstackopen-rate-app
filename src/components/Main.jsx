@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 
-import RepositoryList from "./RespositoryList";
+import RepositoryList from "./RepositoryList";
 import AppBar from "./AppBar";
 
 const styles = StyleSheet.create({
