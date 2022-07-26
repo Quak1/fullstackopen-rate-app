@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-native";
 
 import SignUpForm from "./Form/SignUpForm";
 import useSignUp from "../hooks/useSignUp";
+import useSignIn from "../hooks/useSignIn";
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -36,12 +37,17 @@ const styles = StyleSheet.create({
 const SignUp = () => {
   const navigate = useNavigate();
   const signUp = useSignUp();
+  const [signIn] = useSignIn();
 
   const onSubmit = async (values) => {
+    const { username, password } = values;
+
     try {
-      const userId = await signUp(values);
-      // navigate("/");
-      console.log(userId);
+      const userId = await signUp({ username, password });
+      if (userId) {
+        await signIn({ username, password });
+        navigate("/");
+      }
     } catch (e) {
       console.log("error:", e.message);
     }
