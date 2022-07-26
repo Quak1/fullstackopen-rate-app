@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { FlatList } from "react-native";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-native";
 
@@ -17,10 +17,13 @@ const RepositoryDetails = () => {
   }
 
   return (
-    <View>
-      <RepositoryItem item={data.repository} url={data.repository.url} />
-      <ReviewItem item={data.repository.reviews.edges[0]} />
-    </View>
+    <FlatList
+      data={data.repository.reviews.edges}
+      renderItem={ReviewItem}
+      ListHeaderComponent={
+        <RepositoryItem item={data.repository} url={data.repository.url} />
+      }
+    />
   );
 };
 
