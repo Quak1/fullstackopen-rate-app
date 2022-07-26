@@ -10,5 +10,6 @@ export const REPOSITORY_DISPLAY_FIELDS = gql`
     forksCount
     ratingAverage
     reviewCount
+    id
   }
 `;
