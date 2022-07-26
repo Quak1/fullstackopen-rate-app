@@ -1,8 +1,10 @@
 import { View, StyleSheet } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { useNavigate } from "react-router-native";
 
 import ReviewForm from "./Form/ReviewForm";
+import useSubmitReview from "../hooks/useSubmitReview";
 
 const validationSchema = yup.object().shape({
   repositoryOwner: yup.string().required("Repository owner is required"),
@@ -31,8 +33,16 @@ const styles = StyleSheet.create({
 });
 
 const CreateReview = () => {
+  const navigate = useNavigate();
+  const submitReview = useSubmitReview();
+
   const onSubmit = async (values) => {
-    console.log(values);
+    try {
+      const repoId = await submitReview(values);
+      navigate(`/repositories/${repoId}`);
+    } catch (e) {
+      console.log("error:", e.message);
+    }
   };
 
   return (

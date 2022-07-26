@@ -10,6 +10,7 @@ const RepositoryDetails = () => {
   const { id } = useParams();
   const { loading, data } = useQuery(GET_REPOSITORY, {
     variables: { repositoryId: id },
+    fetchPolicy: "cache-and-network",
   });
 
   if (loading) {
