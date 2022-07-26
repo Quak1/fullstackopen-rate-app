@@ -29,6 +29,18 @@ export const GET_REPOSITORY = gql`
     repository(id: $repositoryId) {
       ...RepositoryDisplayFields
       url
+      reviews {
+        edges {
+          node {
+            text
+            rating
+            createdAt
+            user {
+              username
+            }
+          }
+        }
+      }
     }
   }
 `;
