@@ -1,16 +1,17 @@
-import { Text } from "react-native";
+import { FlatList } from "react-native";
 import { useQuery } from "@apollo/client";
 
 import { ME } from "../graphql/queries";
+import ReviewItem from "./ReviewItem";
 
 const MyReviews = () => {
   const { data, loading } = useQuery(ME, {
     variables: { includeReviews: true },
   });
 
-  console.log(data);
+  if (loading) return null;
 
-  return <Text>My reviews</Text>;
+  return <FlatList data={data.me.reviews.edges} renderItem={ReviewItem} />;
 };
 
 export default MyReviews;
