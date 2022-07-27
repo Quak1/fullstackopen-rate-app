@@ -2,6 +2,7 @@ import { FlatList, View, StyleSheet } from "react-native";
 import { Link } from "react-router-native";
 
 import RepositoryItem from "./RepositoryItem";
+import SortOrderPicker from "./SortOrderPicker";
 
 const styles = StyleSheet.create({
   separator: {
@@ -17,7 +18,7 @@ const PressableItem = ({ item }) => {
   );
 };
 
-const RepositoryListContainer = ({ repositories }) => {
+const RepositoryListContainer = ({ repositories, pickerState }) => {
   const ItemSeparator = () => <View style={styles.separator} />;
 
   const repositoryNodes = repositories
@@ -26,6 +27,7 @@ const RepositoryListContainer = ({ repositories }) => {
 
   return (
     <FlatList
+      ListHeaderComponent={<SortOrderPicker state={pickerState} />}
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={PressableItem}
