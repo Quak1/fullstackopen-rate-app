@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-import { REPOSITORY_DISPLAY_FIELDS } from "./fragments";
+import { REPOSITORY_DISPLAY_FIELDS, REVIEWS_FIELDS } from "./fragments";
 
 export const GET_REPOSITORIES = gql`
   ${REPOSITORY_DISPLAY_FIELDS}
@@ -45,15 +45,28 @@ export const GET_ORDERED_REPOSITORIES = gql`
 `;
 
 export const ME = gql`
-  query Me {
+  ${REVIEWS_FIELDS}
+  query Me($includeReviews: Boolean = false) {
     me {
       username
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            ...ReviewsFields
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
     }
   }
 `;
 
 export const GET_REPOSITORY = gql`
   ${REPOSITORY_DISPLAY_FIELDS}
+  ${REVIEWS_FIELDS}
   query Repository($repositoryId: ID!, $first: Int, $after: String) {
     repository(id: $repositoryId) {
       ...RepositoryDisplayFields
@@ -61,12 +74,7 @@ export const GET_REPOSITORY = gql`
       reviews(first: $first, after: $after) {
         edges {
           node {
-            text
-            rating
-            createdAt
-            user {
-              username
-            }
+            ...ReviewsFields
           }
         }
         pageInfo {
