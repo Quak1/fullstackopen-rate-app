@@ -8,10 +8,25 @@ import ReviewItem from "./ReviewItem";
 
 const RepositoryDetails = () => {
   const { id } = useParams();
-  const { loading, data } = useQuery(GET_REPOSITORY, {
-    variables: { repositoryId: id },
+  const variables = { repositoryId: id, first: 3 };
+  const { loading, data, fetchMore } = useQuery(GET_REPOSITORY, {
+    variables,
     fetchPolicy: "cache-and-network",
   });
+
+  const handleFetchMore = () => {
+    const canFetchMore =
+      !loading && data?.repository.reviews.pageInfo.hasNextPage;
+
+    if (!canFetchMore) return;
+
+    fetchMore({
+      variables: {
+        after: data.repository.reviews.pageInfo.endCursor,
+        ...variables,
+      },
+    });
+  };
 
   if (loading) {
     return null;
@@ -24,6 +39,7 @@ const RepositoryDetails = () => {
       ListHeaderComponent={
         <RepositoryItem item={data.repository} url={data.repository.url} />
       }
+      onEndReached={handleFetchMore}
     />
   );
 };

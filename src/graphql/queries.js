@@ -54,11 +54,11 @@ export const ME = gql`
 
 export const GET_REPOSITORY = gql`
   ${REPOSITORY_DISPLAY_FIELDS}
-  query Repository($repositoryId: ID!) {
+  query Repository($repositoryId: ID!, $first: Int, $after: String) {
     repository(id: $repositoryId) {
       ...RepositoryDisplayFields
       url
-      reviews {
+      reviews(first: $first, after: $after) {
         edges {
           node {
             text
@@ -68,6 +68,10 @@ export const GET_REPOSITORY = gql`
               username
             }
           }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
         }
       }
     }
