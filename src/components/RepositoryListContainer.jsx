@@ -22,6 +22,7 @@ const RepositoryListContainer = ({
   repositories,
   pickerState,
   searchState,
+  ...props
 }) => {
   const ItemSeparator = () => <View style={styles.separator} />;
 
@@ -40,6 +41,7 @@ const RepositoryListContainer = ({
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={PressableItem}
+      {...props}
     />
   );
 };

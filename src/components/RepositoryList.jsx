@@ -12,6 +12,7 @@ const RepositoryList = () => {
     orderBy: "CREATED_AT",
     orderDirection: "DESC",
     searchKeyword: debouncedSearchText,
+    first: 4,
   };
 
   console.log(searchText);
@@ -22,13 +23,15 @@ const RepositoryList = () => {
     sortVariables.orderDirection = "ASC";
   }
 
-  const { repositories } = useRepositories(sortVariables);
+  const { repositories, fetchMore } = useRepositories(sortVariables);
 
   return (
     <RepositoryListContainer
       repositories={repositories}
       pickerState={{ get: picker, set: setPicker }}
       searchState={{ get: searchText, set: setSearchText }}
+      onEndReached={fetchMore}
+      onEndReachedThreshold={0.75}
     />
   );
 };
